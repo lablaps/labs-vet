@@ -1,5 +1,8 @@
 export const STORAGE_KEY = "lapmol.v1";
 
+// Stub temporário mantido para compatibilidade com App.jsx antigo — removido na Task 5
+export const moduleLabels = {};
+
 export const seedData = {
   solicitantes: [
     {
@@ -264,7 +267,10 @@ export function normalizeDataset(input = {}) {
 }
 
 function normalizeCollection(value, fallback, mapper) {
-  return (Array.isArray(value) ? value : fallback).map(mapper).filter(Boolean);
+  return (Array.isArray(value) ? value : fallback)
+    .filter((r) => r && typeof r === "object")
+    .map(mapper)
+    .filter((r) => r && r.id);
 }
 
 function normalizeSolicitante(r) {
