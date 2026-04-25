@@ -74,7 +74,9 @@ CREATE TABLE IF NOT EXISTS financeiro (
   preco_centavos INTEGER,
   forma_pagamento TEXT NOT NULL DEFAULT '',
   status_pagamento TEXT NOT NULL DEFAULT 'aberto',
-  convenio TEXT NOT NULL DEFAULT ''
+  convenio TEXT NOT NULL DEFAULT '',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
 CREATE TABLE IF NOT EXISTS estoque (
