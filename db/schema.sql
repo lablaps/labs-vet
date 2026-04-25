@@ -1,184 +1,114 @@
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE IF NOT EXISTS labs (
+CREATE TABLE IF NOT EXISTS solicitantes (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  short TEXT NOT NULL,
-  coordinator TEXT,
-  local TEXT,
-  description TEXT,
-  stock INTEGER NOT NULL DEFAULT 0,
-  status TEXT NOT NULL DEFAULT 'active',
-  color TEXT NOT NULL DEFAULT '#285A43',
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  nome TEXT NOT NULL,
+  crmv TEXT NOT NULL DEFAULT '',
+  telefone TEXT NOT NULL DEFAULT '',
+  email TEXT NOT NULL DEFAULT '',
+  endereco TEXT NOT NULL DEFAULT '',
+  especies TEXT NOT NULL DEFAULT '',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS tutors (
+CREATE TABLE IF NOT EXISTS tutores (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  document TEXT,
-  phone TEXT,
-  email TEXT,
-  city TEXT,
-  address TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  nome TEXT NOT NULL,
+  cpf TEXT NOT NULL DEFAULT '',
+  telefone TEXT NOT NULL DEFAULT '',
+  email TEXT NOT NULL DEFAULT '',
+  cidade TEXT NOT NULL DEFAULT '',
+  endereco TEXT NOT NULL DEFAULT '',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS veterinarians (
+CREATE TABLE IF NOT EXISTS pacientes (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  crmv TEXT,
-  phone TEXT,
-  email TEXT,
-  address TEXT,
-  species TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  nome TEXT NOT NULL,
+  especie TEXT NOT NULL DEFAULT '',
+  raca TEXT NOT NULL DEFAULT '',
+  idade TEXT NOT NULL DEFAULT '',
+  sexo TEXT NOT NULL DEFAULT '',
+  pelagem TEXT NOT NULL DEFAULT '',
+  tutor_id TEXT REFERENCES tutores(id) ON DELETE SET NULL,
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS patients (
+CREATE TABLE IF NOT EXISTS amostras (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  species TEXT,
-  breed TEXT,
-  age TEXT,
-  sex TEXT,
-  coat TEXT,
-  weight TEXT,
-  tutor_id TEXT REFERENCES tutors(id) ON DELETE SET NULL,
-  status TEXT NOT NULL DEFAULT 'waiting',
-  notes TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  protocolo TEXT NOT NULL UNIQUE,
+  paciente_id TEXT REFERENCES pacientes(id) ON DELETE SET NULL,
+  solicitante_id TEXT REFERENCES solicitantes(id) ON DELETE SET NULL,
+  tipo_exame TEXT NOT NULL DEFAULT '',
+  material TEXT NOT NULL DEFAULT '',
+  condicao TEXT NOT NULL DEFAULT 'adequada',
+  prioridade TEXT NOT NULL DEFAULT 'normal',
+  status TEXT NOT NULL DEFAULT 'recebida',
+  data_coleta TEXT NOT NULL DEFAULT '',
+  data_recebimento TEXT NOT NULL DEFAULT '',
+  observacoes TEXT NOT NULL DEFAULT '',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS patient_labs (
-  patient_id TEXT NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
-  lab_id TEXT NOT NULL REFERENCES labs(id) ON DELETE CASCADE,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (patient_id, lab_id)
+CREATE TABLE IF NOT EXISTS laudos (
+  id TEXT PRIMARY KEY,
+  amostra_id TEXT NOT NULL UNIQUE REFERENCES amostras(id) ON DELETE CASCADE,
+  macro TEXT NOT NULL DEFAULT '',
+  micro TEXT NOT NULL DEFAULT '',
+  diagnostico TEXT NOT NULL DEFAULT '',
+  comentarios TEXT NOT NULL DEFAULT '',
+  responsavel TEXT NOT NULL DEFAULT '',
+  liberado_por TEXT NOT NULL DEFAULT '',
+  liberado_em TEXT NOT NULL DEFAULT '',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS exams (
+CREATE TABLE IF NOT EXISTS financeiro (
   id TEXT PRIMARY KEY,
-  protocol TEXT NOT NULL UNIQUE,
-  patient_id TEXT REFERENCES patients(id) ON DELETE SET NULL,
-  veterinarian_id TEXT REFERENCES veterinarians(id) ON DELETE SET NULL,
-  lab_id TEXT REFERENCES labs(id) ON DELETE SET NULL,
-  type TEXT NOT NULL,
-  requested_by TEXT,
-  status TEXT NOT NULL DEFAULT 'requested',
-  priority TEXT NOT NULL DEFAULT 'normal',
-  collected_at TEXT,
-  received_at TEXT,
-  material TEXT,
-  sample_condition TEXT,
-  macro_description TEXT,
-  micro_description TEXT,
-  diagnosis TEXT,
-  comments TEXT,
-  responsible_doctor TEXT,
-  released_at TEXT,
-  price_cents INTEGER,
-  payment_method TEXT,
-  payment_status TEXT,
-  agreement TEXT,
-  result TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  amostra_id TEXT NOT NULL UNIQUE REFERENCES amostras(id) ON DELETE CASCADE,
+  preco_centavos INTEGER,
+  forma_pagamento TEXT NOT NULL DEFAULT '',
+  status_pagamento TEXT NOT NULL DEFAULT 'aberto',
+  convenio TEXT NOT NULL DEFAULT ''
 );
 
-CREATE TABLE IF NOT EXISTS appointments (
+CREATE TABLE IF NOT EXISTS estoque (
   id TEXT PRIMARY KEY,
-  date TEXT NOT NULL,
-  time TEXT NOT NULL,
-  patient_id TEXT REFERENCES patients(id) ON DELETE SET NULL,
-  lab_id TEXT REFERENCES labs(id) ON DELETE SET NULL,
-  type TEXT,
-  vet TEXT,
-  status TEXT NOT NULL DEFAULT 'pending',
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  nome TEXT NOT NULL,
+  categoria TEXT NOT NULL DEFAULT '',
+  quantidade INTEGER NOT NULL DEFAULT 0,
+  qtd_minima INTEGER NOT NULL DEFAULT 0,
+  qtd_maxima INTEGER NOT NULL DEFAULT 0,
+  validade TEXT NOT NULL DEFAULT '',
+  restrito INTEGER NOT NULL DEFAULT 0,
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS inventory (
+CREATE TABLE IF NOT EXISTS usuarios (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  category TEXT,
-  lab_id TEXT REFERENCES labs(id) ON DELETE SET NULL,
-  qty INTEGER NOT NULL DEFAULT 0,
-  min_qty INTEGER NOT NULL DEFAULT 0,
-  max_qty INTEGER NOT NULL DEFAULT 0,
-  expiry TEXT,
-  restricted INTEGER NOT NULL DEFAULT 0,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
-);
-
-CREATE TABLE IF NOT EXISTS users (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
+  nome TEXT NOT NULL,
   email TEXT NOT NULL,
-  role TEXT,
-  lab_id TEXT REFERENCES labs(id) ON DELETE SET NULL,
-  veterinarian_id TEXT REFERENCES veterinarians(id) ON DELETE SET NULL,
-  status TEXT NOT NULL DEFAULT 'active',
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
+  perfil TEXT NOT NULL DEFAULT 'aluno',
+  status TEXT NOT NULL DEFAULT 'ativo',
+  criado_em TEXT,
+  atualizado_em TEXT
 );
 
-CREATE TABLE IF NOT EXISTS attachments (
+CREATE TABLE IF NOT EXISTS auditoria (
   id TEXT PRIMARY KEY,
-  entity_type TEXT NOT NULL CHECK (entity_type IN ('patient', 'exam')),
-  entity_id TEXT NOT NULL,
-  name TEXT NOT NULL,
-  type TEXT,
-  size INTEGER NOT NULL DEFAULT 0,
-  uploaded_at TEXT,
-  data_url TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
+  acao TEXT NOT NULL,
+  entidade TEXT NOT NULL DEFAULT '',
+  ator TEXT NOT NULL DEFAULT '',
+  registrado_em TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS requisitions (
-  id TEXT PRIMARY KEY,
-  requester_user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
-  lab_id TEXT REFERENCES labs(id) ON DELETE SET NULL,
-  patient_id TEXT REFERENCES patients(id) ON DELETE SET NULL,
-  exam_id TEXT REFERENCES exams(id) ON DELETE SET NULL,
-  type TEXT NOT NULL,
-  priority TEXT NOT NULL DEFAULT 'normal',
-  status TEXT NOT NULL DEFAULT 'open',
-  due_at TEXT,
-  description TEXT,
-  response TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT,
-  updated_at TEXT
-);
-
-CREATE TABLE IF NOT EXISTS audit_events (
-  id TEXT PRIMARY KEY,
-  at TEXT NOT NULL,
-  entity TEXT,
-  action TEXT NOT NULL,
-  actor TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
-);
-
-CREATE INDEX IF NOT EXISTS idx_exams_protocol ON exams(protocol);
-CREATE INDEX IF NOT EXISTS idx_exams_received_at ON exams(received_at);
-CREATE INDEX IF NOT EXISTS idx_exams_patient ON exams(patient_id);
-CREATE INDEX IF NOT EXISTS idx_patients_tutor ON patients(tutor_id);
-CREATE INDEX IF NOT EXISTS idx_patient_labs_pair ON patient_labs(patient_id, lab_id);
-CREATE INDEX IF NOT EXISTS idx_requisitions_lab ON requisitions(lab_id);
-CREATE INDEX IF NOT EXISTS idx_requisitions_status ON requisitions(status);
+CREATE INDEX IF NOT EXISTS idx_amostras_protocolo ON amostras(protocolo);
+CREATE INDEX IF NOT EXISTS idx_amostras_status ON amostras(status);
+CREATE INDEX IF NOT EXISTS idx_amostras_recebimento ON amostras(data_recebimento);
+CREATE INDEX IF NOT EXISTS idx_pacientes_tutor ON pacientes(tutor_id);
