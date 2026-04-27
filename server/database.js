@@ -112,12 +112,18 @@ function insertAmostras(db, rows) {
 
 function insertLaudos(db, rows) {
   const s = db.prepare(`INSERT INTO laudos (id, amostra_id, macro, micro, diagnostico, comentarios, responsavel, liberado_por, liberado_em, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  rows.forEach((r) => s.run(r.id, r.amostraId, r.macro, r.micro, r.diagnostico, r.comentarios, r.responsavel, r.liberadoPor, r.liberadoEm, r.criadoEm || null, r.atualizadoEm || null));
+  rows.forEach((r) => {
+    if (!r.amostraId) throw new Error(`insertLaudos: amostraId obrigatório (laudo id=${r.id})`);
+    s.run(r.id, r.amostraId, r.macro, r.micro, r.diagnostico, r.comentarios, r.responsavel, r.liberadoPor, r.liberadoEm, r.criadoEm || null, r.atualizadoEm || null);
+  });
 }
 
 function insertFinanceiro(db, rows) {
   const s = db.prepare(`INSERT INTO financeiro (id, amostra_id, preco_centavos, forma_pagamento, status_pagamento, convenio, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
-  rows.forEach((r) => s.run(r.id, r.amostraId, r.precoCentavos ?? null, r.formaPagamento, r.statusPagamento, r.convenio, r.criadoEm || null, r.atualizadoEm || null));
+  rows.forEach((r) => {
+    if (!r.amostraId) throw new Error(`insertFinanceiro: amostraId obrigatório (financeiro id=${r.id})`);
+    s.run(r.id, r.amostraId, r.precoCentavos ?? null, r.formaPagamento, r.statusPagamento, r.convenio, r.criadoEm || null, r.atualizadoEm || null);
+  });
 }
 
 function insertEstoque(db, rows) {
@@ -144,11 +150,11 @@ function mapTutor(r) {
 }
 
 function mapPaciente(r) {
-  return { id: r.id, nome: r.nome, especie: r.especie || "", raca: r.raca || "", idade: r.idade || "", sexo: r.sexo || "", pelagem: r.pelagem || "", tutorId: r.tutor_id || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return { id: r.id, nome: r.nome, especie: r.especie || "", raca: r.raca || "", idade: r.idade || "", sexo: r.sexo || "", pelagem: r.pelagem || "", tutorId: r.tutor_id || null, criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
 }
 
 function mapAmostra(r) {
-  return { id: r.id, protocolo: r.protocolo, pacienteId: r.paciente_id || "", solicitanteId: r.solicitante_id || "", tipoExame: r.tipo_exame || "", material: r.material || "", condicao: r.condicao || "adequada", prioridade: r.prioridade || "normal", status: r.status || "recebida", dataColeta: r.data_coleta || "", dataRecebimento: r.data_recebimento || "", observacoes: r.observacoes || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return { id: r.id, protocolo: r.protocolo, pacienteId: r.paciente_id || null, solicitanteId: r.solicitante_id || null, tipoExame: r.tipo_exame || "", material: r.material || "", condicao: r.condicao || "adequada", prioridade: r.prioridade || "normal", status: r.status || "recebida", dataColeta: r.data_coleta || "", dataRecebimento: r.data_recebimento || "", observacoes: r.observacoes || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
 }
 
 function mapLaudo(r) {
