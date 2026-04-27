@@ -1,4 +1,4 @@
-export default function Nav({ items, active, onNavigate, currentUser, onLogout }) {
+export default function Nav({ items = [], active, onNavigate, currentUser, onLogout }) {
   const sections = [...new Set(items.map((i) => i.section))];
 
   return (
@@ -18,7 +18,7 @@ export default function Nav({ items, active, onNavigate, currentUser, onLogout }
                 <button
                   key={item.id}
                   className={`nav-item ${active === item.id ? "nav-item--active" : ""}`}
-                  onClick={() => onNavigate(item.id)}
+                  onClick={() => onNavigate?.(item.id)}
                 >
                   {item.label}
                 </button>
