@@ -33,13 +33,13 @@ const ALL_NAV = [
 ];
 
 export default function App() {
-  const [data, setData] = usePersistentState(STORAGE_KEY, createInitialData());
+  const [data, setData, persistState] = usePersistentState(STORAGE_KEY, createInitialData());
   const [screen, setScreen] = useState("login");
   const [active, setActive] = useState("dashboard");
   const [currentUserId, setCurrentUserId] = useState("");
 
   const currentUser = useMemo(
-    () => data.usuarios.find((u) => u.id === currentUserId) || data.usuarios[0],
+    () => data.usuarios.find((u) => u.id === currentUserId) ?? data.usuarios[0] ?? null,
     [data.usuarios, currentUserId],
   );
 
@@ -110,6 +110,9 @@ export default function App() {
         onLogout={() => setScreen("login")}
       />
       <main className="main-content">
+        {persistState.source === "browser" && (
+          <div className="offline-banner">Modo offline — dados salvos localmente</div>
+        )}
         {active === "dashboard" && <Dashboard {...pageProps} />}
         {active === "amostras" && <Amostras {...pageProps} />}
         {active === "laudos" && <Laudos {...pageProps} />}
