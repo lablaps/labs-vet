@@ -4,8 +4,8 @@ export default function Nav({ items = [], active, onNavigate, currentUser, onLog
   return (
     <nav className="sidebar">
       <div className="sidebar-header">
-        <span className="sidebar-logo">LAPMOL</span>
-        <span className="sidebar-sub">UEMA — Patologia Molecular</span>
+        <span className="sidebar-logo">LaPaVe</span>
+        <span className="sidebar-sub">UEMA — Patologia Veterinária</span>
       </div>
 
       <div className="sidebar-nav">

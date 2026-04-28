@@ -17,7 +17,17 @@ const makeId = (prefix) =>
 
 const makeProtocolo = () => {
   const hoje = new Date().toISOString().slice(0, 10).replaceAll("-", "");
-  return `LAPMOL-${hoje}-${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
+  return `LAPAVE-${hoje}-${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
+};
+
+const makeRC = (amostras) => {
+  const year = new Date().getFullYear();
+  const thisYear = (amostras || []).filter((a) => a.rc && a.rc.endsWith(`/${year}`));
+  const maxNum = thisYear.reduce((max, a) => {
+    const match = a.rc.match(/RC-(\d+)\//);
+    return match ? Math.max(max, parseInt(match[1])) : max;
+  }, 0);
+  return `RC-${String(maxNum + 1).padStart(4, "0")}/${year}`;
 };
 
 const ALL_NAV = [
@@ -70,8 +80,8 @@ export default function App() {
     return (
       <div className="login-screen">
         <div className="login-card">
-          <h1 className="login-title">LAPMOL</h1>
-          <p className="login-sub">Laboratório de Patologia Molecular — UEMA</p>
+          <h1 className="login-title">LaPaVe</h1>
+          <p className="login-sub">Laboratório de Patologia Veterinária — UEMA</p>
           <p className="login-hint">Selecione seu perfil para continuar:</p>
           <div className="login-users">
             {data.usuarios.filter((u) => u.status === "ativo").map((u) => (
@@ -97,6 +107,7 @@ export default function App() {
     acesso,
     makeId,
     makeProtocolo,
+    makeRC,
     registrarAuditoria,
   };
 
