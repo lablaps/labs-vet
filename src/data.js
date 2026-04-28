@@ -1,6 +1,6 @@
-export const STORAGE_KEY = "lapmol.v1";
+export const STORAGE_KEY = "lapave.v1";
 
-// Stub temporário mantido para compatibilidade com App.jsx antigo — removido na Task 5
+// Stub temporário mantido para compatibilidade — removido em refactor futuro
 export const moduleLabels = {};
 
 export const seedData = {
@@ -13,24 +13,6 @@ export const seedData = {
       email: "huv@uema.br",
       endereco: "Campus Paulo VI, São Luís — MA",
       especies: "Cães, gatos, equinos, silvestres",
-    },
-    {
-      id: "sol-rafael",
-      nome: "Dr. Rafael Nunes",
-      crmv: "CRMV-MA 2290",
-      telefone: "(98) 99111-1003",
-      email: "rafael@uema.br",
-      endereco: "Hospital Veterinário Universitário",
-      especies: "Cães, gatos e equinos",
-    },
-    {
-      id: "sol-clinica-norte",
-      nome: "Clínica VetNorte",
-      crmv: "",
-      telefone: "(98) 98800-1234",
-      email: "contato@vetnorte.com.br",
-      endereco: "Av. dos Holandeses, São Luís — MA",
-      especies: "Cães e gatos",
     },
   ],
   tutores: [
@@ -52,15 +34,6 @@ export const seedData = {
       cidade: "São Luís",
       endereco: "Cohama, São Luís — MA",
     },
-    {
-      id: "tut-pedro",
-      nome: "Pedro Santos",
-      cpf: "345.678.901-22",
-      telefone: "(98) 98821-3344",
-      email: "pedro@email.com",
-      cidade: "Paço do Lumiar",
-      endereco: "Maiobão, Paço do Lumiar — MA",
-    },
   ],
   pacientes: [
     {
@@ -71,6 +44,7 @@ export const seedData = {
       idade: "4 anos",
       sexo: "Macho",
       pelagem: "Dourada",
+      peso: "28 kg",
       tutorId: "tut-joao",
     },
     {
@@ -81,94 +55,87 @@ export const seedData = {
       idade: "2 anos",
       sexo: "Fêmea",
       pelagem: "Seal point",
+      peso: "4 kg",
       tutorId: "tut-maria",
-    },
-    {
-      id: "pac-rex",
-      nome: "Rex",
-      especie: "Canino",
-      raca: "Pastor Alemão",
-      idade: "6 anos",
-      sexo: "Macho",
-      pelagem: "Preta e castanha",
-      tutorId: "tut-pedro",
     },
   ],
   amostras: [
     {
       id: "amo-001",
-      protocolo: "LAPMOL-20260414-001",
+      protocolo: "LAPAVE-20260428-001",
+      rc: "RC-0001/2026",
       pacienteId: "pac-thor",
       solicitanteId: "sol-huv",
-      tipoExame: "PCR",
-      material: "Swab nasal",
+      tipoExame: "citologico",
+      material: "Punção aspirativa por agulha fina em nódulo subcutâneo",
+      tecnicaColeta: "PAAF",
+      coloracao: "PANÓTIPO RÁPIDO",
+      responsavelColeta: "Prof. Fábio",
+      historico: "Nódulo subcutâneo em região lateral direita, evolução de 3 meses.",
       condicao: "adequada",
       prioridade: "normal",
       status: "laudo_liberado",
       dataColeta: "2026-04-14",
       dataRecebimento: "2026-04-14",
+      dataEntrada: "2026-04-14",
+      dataResultado: "2026-04-16",
+      dataEntregue: "",
       observacoes: "",
+      caracteristicasLesao: ["NÓDULO"],
+      localizacaoLesao: [],
+      neoplasia: { consistencia: "FIRME", massaUlcerada: false, tumorAderido: "PELE", movel: true, secrecao: false, coloracao: "", linfonodos: false, quaisLinfonodos: "" },
+      terapiaRecente: "",
+      enfermidadesIntercorrentes: "",
+      suspeitaClinica: "Lipoma vs mastocitoma",
+      animalCastrado: false,
+      intencaoCastracao: "",
     },
     {
       id: "amo-002",
-      protocolo: "LAPMOL-20260415-002",
+      protocolo: "LAPAVE-20260428-002",
+      rc: "RC-0002/2026",
       pacienteId: "pac-luna",
-      solicitanteId: "sol-rafael",
-      tipoExame: "Histopatológico",
-      material: "Fragmento de pele em formalina 10%",
+      solicitanteId: "sol-huv",
+      tipoExame: "citologico",
+      material: "Punção aspirativa de lesão cutânea em região dorsal",
+      tecnicaColeta: "PAAF",
+      coloracao: "GIEMSA",
+      responsavelColeta: "Carol",
+      historico: "",
       condicao: "adequada",
       prioridade: "alta",
       status: "em_analise",
-      dataColeta: "2026-04-15",
-      dataRecebimento: "2026-04-15",
-      observacoes: "Fragmento irregular medindo 1,2 x 0,8 cm.",
-    },
-    {
-      id: "amo-003",
-      protocolo: "LAPMOL-20260415-003",
-      pacienteId: "pac-rex",
-      solicitanteId: "sol-clinica-norte",
-      tipoExame: "Citológico",
-      material: "Punção aspirativa de linfonodo",
-      condicao: "adequada",
-      prioridade: "urgente",
-      status: "recebida",
-      dataColeta: "2026-04-15",
-      dataRecebimento: "2026-04-15",
-      observacoes: "Coletar até o fim do turno.",
+      dataColeta: "2026-04-28",
+      dataRecebimento: "2026-04-28",
+      dataEntrada: "2026-04-28",
+      dataResultado: "",
+      dataEntregue: "",
+      observacoes: "Lesão ulcerada, bordas irregulares.",
+      caracteristicasLesao: ["ÚLCERA", "NÓDULO"],
+      localizacaoLesao: [],
+      neoplasia: {},
+      terapiaRecente: "",
+      enfermidadesIntercorrentes: "",
+      suspeitaClinica: "",
+      animalCastrado: true,
+      intencaoCastracao: "",
     },
   ],
   laudos: [
     {
       id: "lau-001",
       amostraId: "amo-001",
-      macro: "Amostra identificada, swab nasal em condição adequada.",
-      micro: "PCR positivo para Leishmania sp.",
-      diagnostico: "Leishmaniose visceral confirmada por PCR.",
-      comentarios: "Iniciar protocolo terapêutico conforme orientação do clínico.",
-      responsavel: "Prof. Dr. Ewaldo Santana",
-      liberadoPor: "usr-ewaldo",
-      liberadoEm: "2026-04-14",
+      materialEnviado: "Punção aspirativa por agulha fina em nódulo subcutâneo lateral direito. Esfregaços corados pelo método Panótico Rápido.",
+      macro: "Material representativo, boa celularidade.",
+      micro: "População celular composta predominantemente por adipócitos maduros, sem atipia significativa.",
+      diagnostico: "Lipoma — neoplasia mesenquimal benigna.",
+      comentarios: "Prognóstico favorável. Exérese cirúrgica eletiva.",
+      responsavel: "Prof. Fábio",
+      liberadoPor: "usr-fabio",
+      liberadoEm: "2026-04-16",
     },
   ],
-  financeiro: [
-    {
-      id: "fin-001",
-      amostraId: "amo-001",
-      precoCentavos: 22000,
-      formaPagamento: "Pix",
-      statusPagamento: "pago",
-      convenio: "",
-    },
-    {
-      id: "fin-002",
-      amostraId: "amo-002",
-      precoCentavos: 14000,
-      formaPagamento: "A faturar",
-      statusPagamento: "aberto",
-      convenio: "Projeto escola",
-    },
-  ],
+  financeiro: [],
   estoque: [
     {
       id: "est-formalina",
@@ -181,23 +148,23 @@ export const seedData = {
       restrito: true,
     },
     {
-      id: "est-reagente-pcr",
-      nome: "Master Mix PCR",
-      categoria: "Reagente",
-      quantidade: 12,
-      qtdMinima: 20,
-      qtdMaxima: 80,
-      validade: "2026-09-05",
+      id: "est-panotipo",
+      nome: "Panótico Rápido",
+      categoria: "Corante",
+      quantidade: 8,
+      qtdMinima: 10,
+      qtdMaxima: 50,
+      validade: "2027-02-10",
       restrito: false,
     },
     {
-      id: "est-tubos-edta",
-      nome: "Tubo EDTA 4mL",
-      categoria: "Coleta",
-      quantidade: 145,
-      qtdMinima: 50,
-      qtdMaxima: 200,
-      validade: "2027-03-15",
+      id: "est-giemsa",
+      nome: "Giemsa",
+      categoria: "Corante",
+      quantidade: 15,
+      qtdMinima: 10,
+      qtdMaxima: 50,
+      validade: "2027-05-20",
       restrito: false,
     },
     {
@@ -213,23 +180,30 @@ export const seedData = {
   ],
   usuarios: [
     {
-      id: "usr-ewaldo",
-      nome: "Prof. Dr. Ewaldo Santana",
-      email: "ewaldo.santana@uema.br",
+      id: "usr-fabio",
+      nome: "Prof. Fábio",
+      email: "fabio@uema.br",
       perfil: "professor",
       status: "ativo",
     },
     {
-      id: "usr-fernanda",
-      nome: "Fernanda Lima",
-      email: "fernanda@uema.br",
+      id: "usr-carol",
+      nome: "Carol",
+      email: "carol@uema.br",
       perfil: "coordenador",
       status: "ativo",
     },
     {
-      id: "usr-julia",
-      nome: "Julia Carvalho",
-      email: "julia@uema.br",
+      id: "usr-aluno1",
+      nome: "Aluno 1",
+      email: "aluno1@uema.br",
+      perfil: "aluno",
+      status: "ativo",
+    },
+    {
+      id: "usr-aluno2",
+      nome: "Aluno 2",
+      email: "aluno2@uema.br",
       perfil: "aluno",
       status: "ativo",
     },
@@ -237,10 +211,10 @@ export const seedData = {
   auditoria: [
     {
       id: "aud-001",
-      acao: "Laudo liberado: LAPMOL-20260414-001",
+      acao: "Laudo liberado: RC-0001/2026",
       entidade: "Laudos",
-      ator: "Prof. Dr. Ewaldo Santana",
-      registradoEm: "2026-04-14T14:00:00.000Z",
+      ator: "Prof. Fábio",
+      registradoEm: "2026-04-16T14:00:00.000Z",
     },
   ],
 };
@@ -275,44 +249,26 @@ function normalizeCollection(value, fallback, mapper) {
 
 function normalizeSolicitante(r) {
   return {
-    id: r.id,
-    nome: r.nome || "",
-    crmv: r.crmv || "",
-    telefone: r.telefone || "",
-    email: r.email || "",
-    endereco: r.endereco || "",
-    especies: r.especies || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    id: r.id, nome: r.nome || "", crmv: r.crmv || "", telefone: r.telefone || "",
+    email: r.email || "", endereco: r.endereco || "", especies: r.especies || "",
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeTutor(r) {
   return {
-    id: r.id,
-    nome: r.nome || "",
-    cpf: r.cpf || "",
-    telefone: r.telefone || "",
-    email: r.email || "",
-    cidade: r.cidade || "",
-    endereco: r.endereco || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    id: r.id, nome: r.nome || "", cpf: r.cpf || "", telefone: r.telefone || "",
+    email: r.email || "", cidade: r.cidade || "", endereco: r.endereco || "",
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizePaciente(r) {
   return {
-    id: r.id,
-    nome: r.nome || "",
-    especie: r.especie || "",
-    raca: r.raca || "",
-    idade: r.idade || "",
-    sexo: r.sexo || "",
-    pelagem: r.pelagem || "",
-    tutorId: r.tutorId || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    id: r.id, nome: r.nome || "", especie: r.especie || "", raca: r.raca || "",
+    idade: r.idade || "", sexo: r.sexo || "", pelagem: r.pelagem || "",
+    peso: r.peso || "", tutorId: r.tutorId || null,
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
@@ -320,86 +276,97 @@ function normalizeAmostra(r) {
   return {
     id: r.id,
     protocolo: r.protocolo || "",
-    pacienteId: r.pacienteId || "",
-    solicitanteId: r.solicitanteId || "",
-    tipoExame: r.tipoExame || "",
+    rc: r.rc || "",
+    pacienteId: r.pacienteId || null,
+    solicitanteId: r.solicitanteId || null,
+    tipoExame: r.tipoExame || "citologico",
     material: r.material || "",
+    tecnicaColeta: r.tecnicaColeta || "",
+    coloracao: r.coloracao || "",
+    responsavelColeta: r.responsavelColeta || "",
+    historico: r.historico || "",
     condicao: r.condicao || "adequada",
     prioridade: r.prioridade || "normal",
     status: r.status || "recebida",
     dataColeta: r.dataColeta || "",
     dataRecebimento: r.dataRecebimento || "",
+    dataEntrada: r.dataEntrada || "",
+    dataResultado: r.dataResultado || "",
+    dataEntregue: r.dataEntregue || "",
     observacoes: r.observacoes || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    caracteristicasLesao: Array.isArray(r.caracteristicasLesao) ? r.caracteristicasLesao : [],
+    localizacaoLesao: Array.isArray(r.localizacaoLesao) ? r.localizacaoLesao : [],
+    neoplasia: (r.neoplasia && typeof r.neoplasia === "object") ? r.neoplasia : {},
+    terapiaRecente: r.terapiaRecente || "",
+    enfermidadesIntercorrentes: r.enfermidadesIntercorrentes || "",
+    suspeitaClinica: r.suspeitaClinica || "",
+    animalCastrado: Boolean(r.animalCastrado),
+    intencaoCastracao: r.intencaoCastracao || "",
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeLaudo(r) {
   return {
-    id: r.id,
-    amostraId: r.amostraId || "",
-    macro: r.macro || "",
-    micro: r.micro || "",
-    diagnostico: r.diagnostico || "",
-    comentarios: r.comentarios || "",
-    responsavel: r.responsavel || "",
-    liberadoPor: r.liberadoPor || "",
+    id: r.id, amostraId: r.amostraId || "",
+    materialEnviado: r.materialEnviado || "",
+    macro: r.macro || "", micro: r.micro || "",
+    diagnostico: r.diagnostico || "", comentarios: r.comentarios || "",
+    responsavel: r.responsavel || "", liberadoPor: r.liberadoPor || "",
     liberadoEm: r.liberadoEm || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeFinanceiro(r) {
   return {
-    id: r.id,
-    amostraId: r.amostraId || "",
-    precoCentavos: r.precoCentavos ?? null,
-    formaPagamento: r.formaPagamento || "",
-    statusPagamento: r.statusPagamento || "aberto",
-    convenio: r.convenio || "",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    id: r.id, amostraId: r.amostraId || "",
+    precoCentavos: r.precoCentavos ?? null, formaPagamento: r.formaPagamento || "",
+    statusPagamento: r.statusPagamento || "aberto", convenio: r.convenio || "",
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeEstoque(r) {
   return {
-    id: r.id,
-    nome: r.nome || "",
-    categoria: r.categoria || "",
-    quantidade: Number(r.quantidade || 0),
-    qtdMinima: Number(r.qtdMinima || 0),
-    qtdMaxima: Number(r.qtdMaxima || 0),
-    validade: r.validade || "",
+    id: r.id, nome: r.nome || "", categoria: r.categoria || "",
+    quantidade: Number(r.quantidade || 0), qtdMinima: Number(r.qtdMinima || 0),
+    qtdMaxima: Number(r.qtdMaxima || 0), validade: r.validade || "",
     restrito: Boolean(r.restrito),
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeUsuario(r) {
   return {
-    id: r.id,
-    nome: r.nome || "",
-    email: r.email || "",
-    perfil: r.perfil || "aluno",
-    status: r.status || "ativo",
-    criadoEm: r.criadoEm,
-    atualizadoEm: r.atualizadoEm,
+    id: r.id, nome: r.nome || "", email: r.email || "",
+    perfil: r.perfil || "aluno", status: r.status || "ativo",
+    criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }
 
 function normalizeAuditoria(r) {
   return {
-    id: r.id,
-    acao: r.acao || "",
-    entidade: r.entidade || "",
-    ator: r.ator || "",
-    registradoEm: r.registradoEm || new Date().toISOString(),
+    id: r.id, acao: r.acao || "", entidade: r.entidade || "",
+    ator: r.ator || "", registradoEm: r.registradoEm || new Date().toISOString(),
   };
 }
+
+export const TIPOS_EXAME = [
+  { value: "citologico", label: "Citológico / Patológico" },
+  { value: "histopatologico", label: "Histopatológico" },
+  { value: "necropsia", label: "Necrópsia" },
+];
+
+export const TECNICAS_COLETA = ["IMPRINT", "PAAF", "CAAF", "SWAB", "BIÓPSIA PUNCIONAL", "NECROPSIA"];
+
+export const COLORACOES = ["PANÓTIPO RÁPIDO", "GIEMSA", "AZUL DE TOLUIDINA", "GRAM"];
+
+export const CARACTERISTICAS_LESAO = [
+  "MÁCULA", "PÚSTULA", "ERITEMA", "PÁPULA", "VESÍCULA", "PRURIDO",
+  "PLACA", "ABSCESSO", "ALOPECIA", "NÓDULO", "CISTO", "BOLHA",
+  "ÚLCERA", "DESPIGMENTAÇÃO", "OUTRO",
+];
 
 export const statusLabels = {
   recebida: "Recebida",
@@ -421,4 +388,7 @@ export const statusLabels = {
   professor: "Professor",
   coordenador: "Coordenador",
   aluno: "Aluno",
+  citologico: "Citológico",
+  histopatologico: "Histopatológico",
+  necropsia: "Necrópsia",
 };
