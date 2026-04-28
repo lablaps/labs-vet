@@ -1789,3 +1789,64 @@ body {
 
 /* === Offline Banner === */
 .offline-banner { background: #FFF7ED; border: 1px solid #FED7AA; color: #C2410C; padding: 8px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
+
+/* === LaPaVe — Formulário sections === */
+.form-section { margin-bottom: 20px; border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; background: #fff; }
+.form-section--highlight { border-color: #FCD34D; background: #FFFBEB; }
+.form-section-title { font-size: 13px; font-weight: 700; color: #374151; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB; }
+.form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.form-group-label { font-size: 12px; font-weight: 600; color: #6B7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* === Checkboxes e rádios === */
+.checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.checkbox-group--wrap { gap: 6px; }
+.checkbox-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #374151; cursor: pointer; padding: 4px 8px; border: 1px solid #E5E7EB; border-radius: 5px; background: #F9FAFB; }
+.checkbox-item:hover { background: #F3F4F6; border-color: #D1D5DB; }
+.checkbox-item input { margin: 0; cursor: pointer; }
+
+/* === Em desenvolvimento badge === */
+.em-desenvolvimento { background: #F9FAFB; border: 2px dashed #D1D5DB; border-radius: 8px; padding: 24px; text-align: center; color: #6B7280; }
+.em-desenvolvimento p { margin: 4px 0; font-size: 14px; }
+
+/* === Filter bar === */
+.filter-bar { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+.filter-select { padding: 8px 12px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 14px; background: #fff; }
+
+/* === Body Diagram === */
+.body-diagram { border: 1px solid #E5E7EB; border-radius: 8px; padding: 12px; background: #fff; }
+.body-diagram-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+.body-diagram-tab { padding: 5px 14px; border: 1px solid #D1D5DB; border-radius: 5px; background: #F9FAFB; font-size: 13px; cursor: pointer; }
+.body-diagram-tab--active { background: #285A43; color: #fff; border-color: #285A43; }
+.body-diagram-canvas { position: relative; }
+.body-diagram-svg { width: 100%; max-width: 380px; height: auto; display: block; border: 1px solid #E5E7EB; border-radius: 6px; background: #fff; }
+.body-diagram-hint { font-size: 11px; color: #9CA3AF; margin: 4px 0 0; }
+.body-diagram-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.body-diagram-item { display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 3px 8px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px; }
+.body-diagram-badge { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #DC2626; color: #fff; font-size: 10px; font-weight: 700; }
+.body-diagram-view-label { color: #374151; }
+.body-diagram-remove { background: none; border: none; cursor: pointer; color: #9CA3AF; font-size: 12px; padding: 0; line-height: 1; }
+.body-diagram-remove:hover { color: #DC2626; }
+
+/* === Laudo Preview === */
+.laudo-preview { font-size: 13px; color: #000; }
+.laudo-header { display: flex; align-items: center; border-bottom: 2px solid #1A3D2B; padding-bottom: 12px; margin-bottom: 16px; gap: 16px; }
+.laudo-logo-area { flex-shrink: 0; }
+.laudo-logo-placeholder { width: 70px; height: 52px; border: 2px solid #1A3D2B; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #1A3D2B; border-radius: 4px; }
+.laudo-header-text { flex: 1; }
+.laudo-instituicao { font-weight: 700; font-size: 13px; }
+.laudo-centro { font-size: 11px; color: #555; }
+.laudo-lab { font-size: 12px; font-weight: 600; color: #1A3D2B; }
+.laudo-titulo { text-align: center; font-size: 15px; font-weight: 700; text-transform: uppercase; margin: 14px 0; letter-spacing: .03em; }
+.laudo-info-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+.laudo-info-table td { padding: 5px 8px; border: 1px solid #ccc; font-size: 12px; }
+.laudo-field { margin: 8px 0; font-size: 13px; line-height: 1.5; }
+.laudo-nota { margin-top: 18px; font-size: 11px; color: #555; border-top: 1px solid #ccc; padding-top: 8px; }
+.laudo-referencias { font-size: 11px; color: #555; margin-top: 6px; white-space: pre-line; }
+.laudo-footer { margin-top: 28px; border-top: 1px solid #ccc; padding-top: 10px; display: flex; justify-content: space-between; font-size: 12px; }
+
+/* === Print === */
+@media print {
+  .sidebar, .offline-banner, .page-header .btn-primary, .row-actions, .modal-backdrop { display: none !important; }
+  .main-content { padding: 0 !important; }
+  .laudo-preview { font-size: 12px; }
+}

@@ -81,6 +81,7 @@ function PacienteForm({ form, tutores, onChange, onSalvar, onCancelar }) {
           </select>
         </label>
         <label className="form-field"><span>Pelagem</span><input value={form.pelagem || ""} onChange={set("pelagem")} /></label>
+        <label className="form-field"><span>Peso</span><input value={form.peso || ""} onChange={set("peso")} placeholder="Ex: 12 kg" /></label>
         <label className="form-field">
           <span>Tutor</span>
           <select value={form.tutorId || ""} onChange={set("tutorId")}>
