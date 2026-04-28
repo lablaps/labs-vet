@@ -12,6 +12,11 @@ import Estoque from "./pages/Estoque";
 import Usuarios from "./pages/Usuarios";
 import Auditoria from "./pages/Auditoria";
 
+async function sha256(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 const makeId = (prefix) =>
   `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 
@@ -78,25 +83,10 @@ export default function App() {
 
   if (screen === "login") {
     return (
-      <div className="login-screen">
-        <div className="login-card">
-          <h1 className="login-title">LaPaVe</h1>
-          <p className="login-sub">Laboratório de Patologia Veterinária — UEMA</p>
-          <p className="login-hint">Selecione seu perfil para continuar:</p>
-          <div className="login-users">
-            {data.usuarios.filter((u) => u.status === "ativo").map((u) => (
-              <button
-                key={u.id}
-                className="login-user-btn"
-                onClick={() => { setCurrentUserId(u.id); setScreen("app"); }}
-              >
-                <span className="login-user-nome">{u.nome}</span>
-                <span className="login-user-perfil">{u.perfil}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <LoginScreen
+        usuarios={data.usuarios}
+        onLogin={(userId) => { setCurrentUserId(userId); setScreen("app"); }}
+      />
     );
   }
 
@@ -134,6 +124,78 @@ export default function App() {
         {active === "usuarios" && acesso.podeGerenciarUsuarios && <Usuarios {...pageProps} />}
         {active === "auditoria" && acesso.podeVerAuditoria && <Auditoria {...pageProps} />}
       </main>
+    </div>
+  );
+}
+
+function LoginScreen({ usuarios, onLogin }) {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setCarregando(true);
+    setErro("");
+    try {
+      const hash = await sha256(senha);
+      const user = usuarios.find(
+        (u) => u.email.toLowerCase() === email.toLowerCase() && u.senha === hash && u.status === "ativo",
+      );
+      if (user) {
+        onLogin(user.id);
+      } else {
+        setErro("E-mail ou senha incorretos.");
+      }
+    } catch {
+      setErro("Erro ao verificar credenciais. Tente novamente.");
+    }
+    setCarregando(false);
+  }
+
+  return (
+    <div className="login-screen">
+      <div className="login-card">
+        <div className="login-logo-area">
+          <h1 className="login-title">LaPaVe</h1>
+          <p className="login-sub">Laboratório de Patologia Veterinária — UEMA</p>
+        </div>
+
+        <form className="login-form" onSubmit={handleSubmit} autoComplete="on">
+          <label className="form-field">
+            E-mail
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="seu@uema.br"
+              autoComplete="username"
+              required
+            />
+          </label>
+
+          <label className="form-field">
+            Senha
+            <input
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              placeholder="••••••••"
+              autoComplete="current-password"
+              required
+            />
+          </label>
+
+          {erro && <p className="login-erro">{erro}</p>}
+
+          <button type="submit" className="btn-primary login-btn" disabled={carregando}>
+            {carregando ? "Verificando..." : "Entrar"}
+          </button>
+        </form>
+
+        <p className="login-version">LaPaVe — UEMA · {new Date().getFullYear()}</p>
+      </div>
     </div>
   );
 }
