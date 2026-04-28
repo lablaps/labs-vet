@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS pacientes (
   idade TEXT NOT NULL DEFAULT '',
   sexo TEXT NOT NULL DEFAULT '',
   pelagem TEXT NOT NULL DEFAULT '',
+  peso TEXT NOT NULL DEFAULT '',
   tutor_id TEXT REFERENCES tutores(id) ON DELETE SET NULL,
   criado_em TEXT,
   atualizado_em TEXT
@@ -40,16 +41,32 @@ CREATE TABLE IF NOT EXISTS pacientes (
 CREATE TABLE IF NOT EXISTS amostras (
   id TEXT PRIMARY KEY,
   protocolo TEXT NOT NULL UNIQUE,
+  rc TEXT NOT NULL DEFAULT '',
   paciente_id TEXT REFERENCES pacientes(id) ON DELETE SET NULL,
   solicitante_id TEXT REFERENCES solicitantes(id) ON DELETE SET NULL,
-  tipo_exame TEXT NOT NULL DEFAULT '',
+  tipo_exame TEXT NOT NULL DEFAULT 'citologico',
   material TEXT NOT NULL DEFAULT '',
+  tecnica_coleta TEXT NOT NULL DEFAULT '',
+  coloracao TEXT NOT NULL DEFAULT '',
+  responsavel_coleta TEXT NOT NULL DEFAULT '',
+  historico TEXT NOT NULL DEFAULT '',
   condicao TEXT NOT NULL DEFAULT 'adequada',
   prioridade TEXT NOT NULL DEFAULT 'normal',
   status TEXT NOT NULL DEFAULT 'recebida',
   data_coleta TEXT NOT NULL DEFAULT '',
   data_recebimento TEXT NOT NULL DEFAULT '',
+  data_entrada TEXT NOT NULL DEFAULT '',
+  data_resultado TEXT NOT NULL DEFAULT '',
+  data_entregue TEXT NOT NULL DEFAULT '',
   observacoes TEXT NOT NULL DEFAULT '',
+  caracteristicas_lesao TEXT NOT NULL DEFAULT '[]',
+  localizacao_lesao TEXT NOT NULL DEFAULT '[]',
+  neoplasia TEXT NOT NULL DEFAULT '{}',
+  terapia_recente TEXT NOT NULL DEFAULT '',
+  enfermidades_intercorrentes TEXT NOT NULL DEFAULT '',
+  suspeita_clinica TEXT NOT NULL DEFAULT '',
+  animal_castrado INTEGER NOT NULL DEFAULT 0,
+  intencao_castracao TEXT NOT NULL DEFAULT '',
   criado_em TEXT,
   atualizado_em TEXT
 );
@@ -57,6 +74,7 @@ CREATE TABLE IF NOT EXISTS amostras (
 CREATE TABLE IF NOT EXISTS laudos (
   id TEXT PRIMARY KEY,
   amostra_id TEXT NOT NULL UNIQUE REFERENCES amostras(id) ON DELETE CASCADE,
+  material_enviado TEXT NOT NULL DEFAULT '',
   macro TEXT NOT NULL DEFAULT '',
   micro TEXT NOT NULL DEFAULT '',
   diagnostico TEXT NOT NULL DEFAULT '',
@@ -110,6 +128,7 @@ CREATE TABLE IF NOT EXISTS auditoria (
   registrado_em TEXT NOT NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_amostras_rc ON amostras(rc);
 CREATE INDEX IF NOT EXISTS idx_amostras_protocolo ON amostras(protocolo);
 CREATE INDEX IF NOT EXISTS idx_amostras_status ON amostras(status);
 CREATE INDEX IF NOT EXISTS idx_amostras_recebimento ON amostras(data_recebimento);
