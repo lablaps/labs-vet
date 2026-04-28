@@ -24,7 +24,7 @@ export function initializeDatabase({ forceSeed = false, skipSeed = false } = {})
     database.exec(readFileSync(schemaPath, "utf8"));
   }
 
-  const { total } = database.prepare("SELECT COUNT(*) AS total FROM amostras").get();
+  const { total } = database.prepare("SELECT COUNT(*) AS total FROM usuarios").get();
   if (!skipSeed && (forceSeed || total === 0)) {
     writeData(createInitialData(), { skipSeed: true });
   }
@@ -46,7 +46,7 @@ export function resetDatabase() {
 }
 
 export function readData() {
-  const db = initializeDatabase();
+  const db = initializeDatabase({ skipSeed: true });
   return normalizeDataset({
     solicitantes: db.prepare("SELECT * FROM solicitantes ORDER BY nome").all().map(mapSolicitante),
     tutores: db.prepare("SELECT * FROM tutores ORDER BY nome").all().map(mapTutor),
