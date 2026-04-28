@@ -101,20 +101,42 @@ function insertTutores(db, rows) {
 }
 
 function insertPacientes(db, rows) {
-  const s = db.prepare(`INSERT INTO pacientes (id, nome, especie, raca, idade, sexo, pelagem, tutor_id, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  rows.forEach((r) => s.run(r.id, r.nome, r.especie, r.raca, r.idade, r.sexo, r.pelagem, r.tutorId || null, r.criadoEm || null, r.atualizadoEm || null));
+  const s = db.prepare(`INSERT INTO pacientes (id, nome, especie, raca, idade, sexo, pelagem, peso, tutor_id, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  rows.forEach((r) => s.run(r.id, r.nome, r.especie, r.raca, r.idade, r.sexo, r.pelagem, r.peso, r.tutorId || null, r.criadoEm || null, r.atualizadoEm || null));
 }
 
 function insertAmostras(db, rows) {
-  const s = db.prepare(`INSERT INTO amostras (id, protocolo, paciente_id, solicitante_id, tipo_exame, material, condicao, prioridade, status, data_coleta, data_recebimento, observacoes, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  rows.forEach((r) => s.run(r.id, r.protocolo, r.pacienteId || null, r.solicitanteId || null, r.tipoExame, r.material, r.condicao, r.prioridade, r.status, r.dataColeta, r.dataRecebimento, r.observacoes, r.criadoEm || null, r.atualizadoEm || null));
+  const s = db.prepare(`INSERT INTO amostras (
+    id, protocolo, rc, paciente_id, solicitante_id,
+    tipo_exame, material, tecnica_coleta, coloracao, responsavel_coleta,
+    historico, condicao, prioridade, status,
+    data_coleta, data_recebimento, data_entrada, data_resultado, data_entregue,
+    observacoes, caracteristicas_lesao, localizacao_lesao, neoplasia,
+    terapia_recente, enfermidades_intercorrentes, suspeita_clinica,
+    animal_castrado, intencao_castracao, criado_em, atualizado_em
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  rows.forEach((r) => {
+    s.run(
+      r.id, r.protocolo, r.rc, r.pacienteId || null, r.solicitanteId || null,
+      r.tipoExame, r.material, r.tecnicaColeta, r.coloracao, r.responsavelColeta,
+      r.historico, r.condicao, r.prioridade, r.status,
+      r.dataColeta, r.dataRecebimento, r.dataEntrada, r.dataResultado, r.dataEntregue,
+      r.observacoes,
+      JSON.stringify(Array.isArray(r.caracteristicasLesao) ? r.caracteristicasLesao : []),
+      JSON.stringify(Array.isArray(r.localizacaoLesao) ? r.localizacaoLesao : []),
+      JSON.stringify(r.neoplasia && typeof r.neoplasia === "object" ? r.neoplasia : {}),
+      r.terapiaRecente, r.enfermidadesIntercorrentes, r.suspeitaClinica,
+      r.animalCastrado ? 1 : 0, r.intencaoCastracao,
+      r.criadoEm || null, r.atualizadoEm || null,
+    );
+  });
 }
 
 function insertLaudos(db, rows) {
-  const s = db.prepare(`INSERT INTO laudos (id, amostra_id, macro, micro, diagnostico, comentarios, responsavel, liberado_por, liberado_em, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  const s = db.prepare(`INSERT INTO laudos (id, amostra_id, material_enviado, macro, micro, diagnostico, comentarios, responsavel, liberado_por, liberado_em, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
   rows.forEach((r) => {
     if (!r.amostraId) throw new Error(`insertLaudos: amostraId obrigatório (laudo id=${r.id})`);
-    s.run(r.id, r.amostraId, r.macro, r.micro, r.diagnostico, r.comentarios, r.responsavel, r.liberadoPor, r.liberadoEm, r.criadoEm || null, r.atualizadoEm || null);
+    s.run(r.id, r.amostraId, r.materialEnviado, r.macro, r.micro, r.diagnostico, r.comentarios, r.responsavel, r.liberadoPor, r.liberadoEm, r.criadoEm || null, r.atualizadoEm || null);
   });
 }
 
@@ -150,15 +172,37 @@ function mapTutor(r) {
 }
 
 function mapPaciente(r) {
-  return { id: r.id, nome: r.nome, especie: r.especie || "", raca: r.raca || "", idade: r.idade || "", sexo: r.sexo || "", pelagem: r.pelagem || "", tutorId: r.tutor_id || null, criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return { id: r.id, nome: r.nome, especie: r.especie || "", raca: r.raca || "", idade: r.idade || "", sexo: r.sexo || "", pelagem: r.pelagem || "", peso: r.peso || "", tutorId: r.tutor_id || null, criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
 }
 
 function mapAmostra(r) {
-  return { id: r.id, protocolo: r.protocolo, pacienteId: r.paciente_id || null, solicitanteId: r.solicitante_id || null, tipoExame: r.tipo_exame || "", material: r.material || "", condicao: r.condicao || "adequada", prioridade: r.prioridade || "normal", status: r.status || "recebida", dataColeta: r.data_coleta || "", dataRecebimento: r.data_recebimento || "", observacoes: r.observacoes || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return {
+    id: r.id, protocolo: r.protocolo, rc: r.rc || "",
+    pacienteId: r.paciente_id || null, solicitanteId: r.solicitante_id || null,
+    tipoExame: r.tipo_exame || "citologico",
+    material: r.material || "", tecnicaColeta: r.tecnica_coleta || "",
+    coloracao: r.coloracao || "", responsavelColeta: r.responsavel_coleta || "",
+    historico: r.historico || "",
+    condicao: r.condicao || "adequada", prioridade: r.prioridade || "normal",
+    status: r.status || "recebida",
+    dataColeta: r.data_coleta || "", dataRecebimento: r.data_recebimento || "",
+    dataEntrada: r.data_entrada || "", dataResultado: r.data_resultado || "",
+    dataEntregue: r.data_entregue || "",
+    observacoes: r.observacoes || "",
+    caracteristicasLesao: safeJson(r.caracteristicas_lesao, []),
+    localizacaoLesao: safeJson(r.localizacao_lesao, []),
+    neoplasia: safeJson(r.neoplasia, {}),
+    terapiaRecente: r.terapia_recente || "",
+    enfermidadesIntercorrentes: r.enfermidades_intercorrentes || "",
+    suspeitaClinica: r.suspeita_clinica || "",
+    animalCastrado: Boolean(r.animal_castrado),
+    intencaoCastracao: r.intencao_castracao || "",
+    criadoEm: r.criado_em, atualizadoEm: r.atualizado_em,
+  };
 }
 
 function mapLaudo(r) {
-  return { id: r.id, amostraId: r.amostra_id, macro: r.macro || "", micro: r.micro || "", diagnostico: r.diagnostico || "", comentarios: r.comentarios || "", responsavel: r.responsavel || "", liberadoPor: r.liberado_por || "", liberadoEm: r.liberado_em || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return { id: r.id, amostraId: r.amostra_id, materialEnviado: r.material_enviado || "", macro: r.macro || "", micro: r.micro || "", diagnostico: r.diagnostico || "", comentarios: r.comentarios || "", responsavel: r.responsavel || "", liberadoPor: r.liberado_por || "", liberadoEm: r.liberado_em || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
 }
 
 function mapFinanceiro(r) {
@@ -175,4 +219,9 @@ function mapUsuario(r) {
 
 function mapAuditoria(r) {
   return { id: r.id, acao: r.acao, entidade: r.entidade || "", ator: r.ator || "", registradoEm: r.registrado_em };
+}
+
+function safeJson(value, fallback) {
+  if (!value) return fallback;
+  try { return JSON.parse(value); } catch { return fallback; }
 }
