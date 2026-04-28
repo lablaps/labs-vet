@@ -1850,3 +1850,11 @@ body {
   .main-content { padding: 0 !important; }
   .laudo-preview { font-size: 12px; }
 }
+
+/* === Login com autenticação === */
+.login-logo-area { margin-bottom: 28px; }
+.login-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+.login-form .form-field input { width: 100%; box-sizing: border-box; }
+.login-btn { width: 100%; padding: 10px; font-size: 15px; margin-top: 4px; }
+.login-erro { color: #DC2626; font-size: 13px; background: #FEF2F2; border: 1px solid #FECACA; padding: 8px 12px; border-radius: 6px; margin: 0; }
+.login-version { font-size: 11px; color: #9CA3AF; margin-top: 20px; text-align: center; }
