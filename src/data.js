@@ -185,6 +185,7 @@ export const seedData = {
       email: "fabio@uema.br",
       perfil: "professor",
       status: "ativo",
+      senha: "69ab16b2d94a16f0050d45a51568e2984e7ac2b9b614521cc899e33dd3d80593",
     },
     {
       id: "usr-carol",
@@ -192,6 +193,7 @@ export const seedData = {
       email: "carol@uema.br",
       perfil: "coordenador",
       status: "ativo",
+      senha: "69ab16b2d94a16f0050d45a51568e2984e7ac2b9b614521cc899e33dd3d80593",
     },
     {
       id: "usr-aluno1",
@@ -199,6 +201,7 @@ export const seedData = {
       email: "aluno1@uema.br",
       perfil: "aluno",
       status: "ativo",
+      senha: "782a83c07325585f9363c56a97e04996d0fedf43cd1f30f0de1ee578c2ad90f5",
     },
     {
       id: "usr-aluno2",
@@ -206,6 +209,7 @@ export const seedData = {
       email: "aluno2@uema.br",
       perfil: "aluno",
       status: "ativo",
+      senha: "782a83c07325585f9363c56a97e04996d0fedf43cd1f30f0de1ee578c2ad90f5",
     },
   ],
   auditoria: [
@@ -341,6 +345,7 @@ function normalizeUsuario(r) {
   return {
     id: r.id, nome: r.nome || "", email: r.email || "",
     perfil: r.perfil || "aluno", status: r.status || "ativo",
+    senha: r.senha || "",
     criadoEm: r.criadoEm, atualizadoEm: r.atualizadoEm,
   };
 }

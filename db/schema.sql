@@ -113,9 +113,10 @@ CREATE TABLE IF NOT EXISTS estoque (
 CREATE TABLE IF NOT EXISTS usuarios (
   id TEXT PRIMARY KEY,
   nome TEXT NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
   perfil TEXT NOT NULL DEFAULT 'aluno',
   status TEXT NOT NULL DEFAULT 'ativo',
+  senha TEXT NOT NULL DEFAULT '',
   criado_em TEXT,
   atualizado_em TEXT
 );

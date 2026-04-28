@@ -154,8 +154,8 @@ function insertEstoque(db, rows) {
 }
 
 function insertUsuarios(db, rows) {
-  const s = db.prepare(`INSERT INTO usuarios (id, nome, email, perfil, status, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?)`);
-  rows.forEach((r) => s.run(r.id, r.nome, r.email, r.perfil, r.status, r.criadoEm || null, r.atualizadoEm || null));
+  const s = db.prepare(`INSERT INTO usuarios (id, nome, email, perfil, status, senha, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+  rows.forEach((r) => s.run(r.id, r.nome, r.email, r.perfil, r.status, r.senha || "", r.criadoEm || null, r.atualizadoEm || null));
 }
 
 function insertAuditoria(db, rows) {
@@ -214,7 +214,7 @@ function mapEstoque(r) {
 }
 
 function mapUsuario(r) {
-  return { id: r.id, nome: r.nome, email: r.email, perfil: r.perfil || "aluno", status: r.status || "ativo", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
+  return { id: r.id, nome: r.nome, email: r.email, perfil: r.perfil || "aluno", status: r.status || "ativo", senha: r.senha || "", criadoEm: r.criado_em, atualizadoEm: r.atualizado_em };
 }
 
 function mapAuditoria(r) {
