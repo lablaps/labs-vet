@@ -2000,14 +2000,14 @@ body {
   .dashboard-top .page-title { margin-bottom: 0; }
   .btn-novo-caso { width: 100%; padding: 12px; font-size: 16px; }
 
-  /* === Tabelas — scroll horizontal === */
-  .table-scroll {
+  /* === Tabelas — scroll horizontal sem wrapper JSX === */
+  .table {
+    display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    min-width: unset;
     width: 100%;
-    border-radius: 8px;
   }
-  .table { min-width: 580px; }
   .table th, .table td { padding: 8px 10px; font-size: 13px; }
   .row-actions { gap: 4px; flex-wrap: wrap; }
   .btn-sm { font-size: 11px; padding: 3px 8px; }
