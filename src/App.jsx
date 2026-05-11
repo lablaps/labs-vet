@@ -11,6 +11,7 @@ import Pacientes from "./pages/Pacientes";
 import Estoque from "./pages/Estoque";
 import Usuarios from "./pages/Usuarios";
 import Auditoria from "./pages/Auditoria";
+import NovoCaso from "./pages/NovoCaso";
 
 async function sha256(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -39,7 +40,6 @@ const ALL_NAV = [
   { id: "dashboard", label: "Dashboard", section: "Operação" },
   { id: "amostras", label: "Amostras", section: "Amostras" },
   { id: "laudos", label: "Laudos", section: "Amostras" },
-  { id: "solicitantes", label: "Solicitantes", section: "Cadastros" },
   { id: "tutores", label: "Tutores", section: "Cadastros" },
   { id: "pacientes", label: "Pacientes", section: "Cadastros" },
   { id: "estoque", label: "Estoque", section: "Estoque" },
@@ -52,6 +52,7 @@ export default function App() {
   const [screen, setScreen] = useState("login");
   const [active, setActive] = useState("dashboard");
   const [currentUserId, setCurrentUserId] = useState("");
+  const [novoCasoAberto, setNovoCasoAberto] = useState(false);
 
   const currentUser = useMemo(
     () => data.usuarios.find((u) => u.id === currentUserId) ?? data.usuarios[0] ?? null,
@@ -99,6 +100,7 @@ export default function App() {
     makeProtocolo,
     makeRC,
     registrarAuditoria,
+    onAbrirNovoCaso: () => setNovoCasoAberto(true),
   };
 
   return (
@@ -123,6 +125,17 @@ export default function App() {
         {active === "estoque" && <Estoque {...pageProps} />}
         {active === "usuarios" && acesso.podeGerenciarUsuarios && <Usuarios {...pageProps} />}
         {active === "auditoria" && acesso.podeVerAuditoria && <Auditoria {...pageProps} />}
+        {novoCasoAberto && (
+          <NovoCaso
+            data={data}
+            setData={setData}
+            makeId={makeId}
+            makeProtocolo={makeProtocolo}
+            makeRC={makeRC}
+            registrarAuditoria={registrarAuditoria}
+            onClose={() => setNovoCasoAberto(false)}
+          />
+        )}
       </main>
     </div>
   );

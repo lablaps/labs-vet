@@ -1,7 +1,7 @@
 import StatusBadge from "../components/StatusBadge";
 import { statusLabels } from "../data";
 
-export default function Dashboard({ data }) {
+export default function Dashboard({ data, onAbrirNovoCaso }) {
   const { amostras, laudos, estoque, auditoria } = data;
 
   const pendentes = amostras.filter((a) => ["recebida", "em_analise"].includes(a.status));
@@ -13,7 +13,12 @@ export default function Dashboard({ data }) {
 
   return (
     <div className="page">
-      <h1 className="page-title">Dashboard</h1>
+      <div className="dashboard-top">
+        <h1 className="page-title">Dashboard</h1>
+        <button className="btn-novo-caso" onClick={onAbrirNovoCaso}>
+          + Novo caso
+        </button>
+      </div>
 
       <div className="stats-grid">
         <StatCard label="Amostras pendentes" value={pendentes.length} color="#D97706" />

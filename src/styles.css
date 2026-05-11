@@ -1857,3 +1857,37 @@ body {
 .login-btn { width: 100%; padding: 10px; font-size: 15px; margin-top: 4px; }
 .login-erro { color: #DC2626; font-size: 13px; background: #FEF2F2; border: 1px solid #FECACA; padding: 8px 12px; border-radius: 6px; margin: 0; }
 .login-version { font-size: 11px; color: #9CA3AF; margin-top: 20px; text-align: center; }
+
+/* === Wizard Novo Caso === */
+.wizard-steps { display: flex; align-items: center; margin-bottom: 20px; }
+.wizard-step { display: flex; align-items: center; gap: 8px; }
+.wizard-step:not(:last-child) { flex: 1; }
+.wizard-step-num { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #9CA3AF; flex-shrink: 0; }
+.wizard-step--active .wizard-step-num { border-color: #285A43; background: #285A43; color: #fff; }
+.wizard-step--done .wizard-step-num { border-color: #059669; background: #059669; color: #fff; }
+.wizard-step-label { font-size: 13px; color: #9CA3AF; white-space: nowrap; }
+.wizard-step--active .wizard-step-label { color: #1A2E22; font-weight: 600; }
+.wizard-step--done .wizard-step-label { color: #059669; }
+.wizard-step-line { flex: 1; height: 2px; background: #E5E7EB; margin: 0 10px; min-width: 20px; }
+.wizard-step--done + .wizard-step .wizard-step-line,
+.wizard-step--done .wizard-step-line { background: #059669; }
+.wizard-body { max-height: 54vh; overflow-y: auto; padding-right: 6px; margin-bottom: 4px; }
+.wizard-section-title { font-size: 15px; font-weight: 700; color: #1A2E22; margin-bottom: 14px; }
+.wizard-optional { font-size: 12px; font-weight: 400; color: #9CA3AF; margin-left: 6px; }
+.wizard-mode-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.wizard-tab { padding: 5px 16px; border: 1px solid #D1D5DB; border-radius: 20px; background: #fff; font-size: 13px; cursor: pointer; color: #6B7280; transition: all .15s; }
+.wizard-tab.active { background: #1A2E22; color: #fff; border-color: #1A2E22; }
+.wizard-hint { color: #6B7280; font-size: 14px; padding: 14px 16px; background: #F9FAFB; border-radius: 8px; margin: 0; }
+.wizard-list { display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; }
+.wizard-list-item { display: flex; flex-direction: column; text-align: left; padding: 10px 14px; border: 1px solid #E5E7EB; border-radius: 8px; background: #fff; cursor: pointer; gap: 2px; width: 100%; }
+.wizard-list-item:hover { border-color: #285A43; background: #F0FDF4; }
+.wizard-list-item.selected { border-color: #285A43; background: #ECFDF5; }
+.wizard-list-item strong { font-size: 14px; color: #1A2E22; }
+.wizard-list-item span { font-size: 12px; color: #6B7280; }
+.wizard-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #E5E7EB; margin-top: 12px; }
+
+/* === Dashboard top === */
+.dashboard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.dashboard-top .page-title { margin-bottom: 0; }
+.btn-novo-caso { background: #285A43; color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(40,90,67,.25); }
+.btn-novo-caso:hover { background: #1A3D2B; }
