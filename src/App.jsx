@@ -156,7 +156,7 @@ function LoginScreen({ usuarios, onLogin }) {
 
   return (
     <div className="login-screen">
-      <div className="login-card">
+      <div className="login-panel">
         <div className="login-logo-area">
           <h1 className="login-title">LaPaVe</h1>
           <p className="login-sub">Laboratório de Patologia Veterinária — UEMA</p>
@@ -195,6 +195,10 @@ function LoginScreen({ usuarios, onLogin }) {
         </form>
 
         <p className="login-version">LaPaVe — UEMA · {new Date().getFullYear()}</p>
+      </div>
+
+      <div className="login-image-panel">
+        <img src="/images/inicial.jpeg" alt="Laboratório de Patologia Veterinária — UEMA" />
       </div>
     </div>
   );
