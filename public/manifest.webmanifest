@@ -1,6 +1,6 @@
 {
-  "name": "LabVet - Laboratorio Inteligente",
-  "short_name": "LabVet",
+  "name": "LaPaVe - Laboratorio Inteligente",
+  "short_name": "LaPaVe",
   "description": "Operacao offline-first para laboratorio veterinario com SQLite local.",
   "start_url": "/",
   "display": "standalone",
