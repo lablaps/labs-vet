@@ -53,6 +53,7 @@ export default function App() {
   const [active, setActive] = useState("dashboard");
   const [currentUserId, setCurrentUserId] = useState("");
   const [novoCasoAberto, setNovoCasoAberto] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const currentUser = useMemo(
     () => data.usuarios.find((u) => u.id === currentUserId) ?? data.usuarios[0] ?? null,
@@ -108,11 +109,20 @@ export default function App() {
       <Nav
         items={navItems}
         active={active}
-        onNavigate={setActive}
+        onNavigate={(id) => { setActive(id); setSidebarOpen(false); }}
         currentUser={currentUser}
         onLogout={() => setScreen("login")}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
       <main className="main-content">
+        <div className="mobile-topbar">
+          <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Abrir menu">
+            ☰
+          </button>
+          <span className="mobile-brand">LaPaVe</span>
+          <span className="mobile-user-name">{currentUser?.nome?.split(" ")[0]}</span>
+        </div>
         {persistState.source === "browser" && (
           <div className="offline-banner">Modo offline — dados salvos localmente</div>
         )}
