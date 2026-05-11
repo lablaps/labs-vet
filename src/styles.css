@@ -1891,3 +1891,189 @@ body {
 .dashboard-top .page-title { margin-bottom: 0; }
 .btn-novo-caso { background: #285A43; color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(40,90,67,.25); }
 .btn-novo-caso:hover { background: #1A3D2B; }
+
+/* ============================================================
+   MOBILE RESPONSIVE — breakpoint ≤ 768px
+   ============================================================ */
+
+/* Mobile topbar — oculto no desktop */
+.mobile-topbar { display: none; }
+
+@media (max-width: 768px) {
+
+  /* === Login === */
+  .login-image-panel { display: none; }
+  .login-panel {
+    width: 100%;
+    min-width: unset;
+    padding: 48px 24px 32px;
+    justify-content: flex-start;
+    box-shadow: none;
+  }
+
+  /* === App shell === */
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === Sidebar — overlay deslizante === */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    bottom: 0;
+    width: 260px;
+    z-index: 300;
+    transition: left 0.24s ease;
+    box-shadow: 4px 0 24px rgba(0,0,0,.28);
+  }
+  .sidebar--open { left: 0; }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 299;
+  }
+
+  /* === Mobile topbar === */
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1A2E22;
+    color: #fff;
+    padding: 0 16px;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+  .mobile-menu-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    padding: 6px 10px;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 6px;
+  }
+  .mobile-menu-btn:hover { background: rgba(255,255,255,.1); }
+  .mobile-brand { font-size: 17px; font-weight: 800; color: #4ADE80; }
+  .mobile-user-name { font-size: 13px; color: #9CA3AF; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* === Main content === */
+  .main-content {
+    flex: 1;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === Page === */
+  .page {
+    max-width: 100%;
+    padding: 16px;
+  }
+  .page-header { gap: 8px; flex-wrap: wrap; }
+  .page-title { font-size: 18px; }
+
+  /* === Dashboard === */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-value { font-size: 26px; }
+  .stat-label { font-size: 12px; }
+  .dashboard-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .dashboard-top .page-title { margin-bottom: 0; }
+  .btn-novo-caso { width: 100%; padding: 12px; font-size: 16px; }
+
+  /* === Tabelas — scroll horizontal === */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    border-radius: 8px;
+  }
+  .table { min-width: 580px; }
+  .table th, .table td { padding: 8px 10px; font-size: 13px; }
+  .row-actions { gap: 4px; flex-wrap: wrap; }
+  .btn-sm { font-size: 11px; padding: 3px 8px; }
+
+  /* === Forms === */
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid-4 { grid-template-columns: 1fr 1fr; }
+  .form-field--full { grid-column: 1 / -1; }
+
+  /* === Modais — bottom sheet === */
+  .modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    margin: 0;
+  }
+  .modal--wide { width: 100% !important; }
+  .modal-body { padding: 16px; }
+
+  /* === Wizard === */
+  .wizard-body { max-height: 52vh; }
+  .wizard-step-label { display: none; }
+  .wizard-step--active .wizard-step-label,
+  .wizard-step--done .wizard-step-label { display: block; font-size: 11px; }
+  .wizard-footer { padding-top: 12px; }
+
+  /* === Filtros === */
+  .filter-bar { flex-direction: column; gap: 8px; }
+  .search-input { max-width: 100%; width: 100%; }
+  .filter-select { width: 100%; }
+
+  /* === Form sections === */
+  .form-section { padding: 12px; }
+
+  /* === Checkbox groups === */
+  .checkbox-group { gap: 6px; flex-wrap: wrap; }
+  .checkbox-item { font-size: 12px; padding: 3px 8px; }
+
+  /* === Body diagram === */
+  .body-diagram-svg { max-width: 100%; }
+
+  /* === Stat cards === */
+  .stat-card { padding: 12px 14px; }
+
+  /* === Offline banner === */
+  .offline-banner { font-size: 12px; padding: 6px 12px; }
+
+  /* === Laudo preview === */
+  .laudo-header { flex-direction: column; gap: 8px; }
+  .laudo-info-table td { font-size: 11px; padding: 4px 6px; }
+
+  /* === QR container === */
+  .qr-container { padding: 8px; }
+}
+
+/* Tablet — 769px a 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .app-shell { grid-template-columns: 200px 1fr; }
+  .sidebar { width: 200px; min-width: 200px; }
+  .sidebar-logo { font-size: 17px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid-4 { grid-template-columns: 1fr 1fr; }
+  .main-content { padding: 20px; }
+}
